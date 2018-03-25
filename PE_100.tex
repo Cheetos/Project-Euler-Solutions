@@ -1,0 +1,53 @@
+\addcontentsline{toc}{chapter}{100 - Arranged probability}
+\chapter*{100 - Arranged probability}
+
+If a box contains twenty-one coloured discs, composed of fifteen blue discs and six red discs, and two discs were taken at random, it can be seen that the probability of taking two blue discs, $P(BB) = (15/21)(14/20) = 1/2$.\\
+
+The next such arrangement, for which there is exactly 50\% chance of taking two blue discs at random, is a box containing eighty-five blue discs and thirty-five red discs.\\
+
+By finding the first arrangement to contain over $10^{12} = 1000000000000$ discs in total, determine the number of blue discs that the box would contain.
+
+\section*{Solution}
+
+Be $x$ the number of blue discs, and $y$ the total number of discs. We are looking values of $x$ and $y$ such as
+
+\begin{align*}
+    \left ( \frac{x}{y} \right ) \left ( \frac{x-1}{y-1} \right ) = \frac{1}{2} \\
+    2x^2 - 2x = y^2 - y \\
+    2x^2 - 2x - y^2 + y = 0
+\end{align*}
+
+A Diophantine equation is a polynomial equation with integer solutions only. A linear Diophantine equation is
+
+$$
+ax + by = c.
+$$
+
+Which can be solved using the \textit{Extended Euclidean} algorithm. For our case we have a quadratic Diophantine equation, and according to Mario Alpern's explanation \cite{quadratic_diophantine}, an equation of the form
+
+$$
+ ax^2 + bxy + cy^2 + dx + ey + f = 0
+$$
+
+has the following solutions:
+
+\begin{align*}
+    x_{n+1} &= Px_n + Qy_n + K \\
+    y_{n+1} &= Rx_n + Sy_n + L
+\end{align*}
+
+For our specific equation the values of $P,Q,K,R,S,L$ are:
+
+\begin{align*}
+    P &= 3 \\
+    Q &= 2 \\
+    K &= -2 \\
+    R &= 4 \\
+    S &= 3 \\
+    L &= -3
+\end{align*}
+
+The explanation of why these values is detailed in Mario Alpern's site.\\
+
+Coming back to our problem. Using the formulas mentioned above, we only need to iterate though the different value of $x$ and $y$ until $y$ exceeds $10^{12}$.
+

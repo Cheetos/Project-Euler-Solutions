@@ -1,0 +1,35 @@
+\addcontentsline{toc}{chapter}{80 - Square root digital expansion}
+\chapter*{80 - Square root digital expansion}
+
+It is well known that if the square root of a natural number is not an integer, then it is irrational. The decimal expansion of such square roots is infinite without any repeating pattern at all.\\
+
+The square root of two is 1.41421356237309504880..., and the digital sum of the first one hundred decimal digits is 475.\\
+
+For the first one hundred natural numbers, find the total of the digital sums of the first one hundred decimal digits for all the irrational square roots.\\
+
+\section*{Solution}
+
+To solve this problem we used the method of \textit{Square Root by Subtraction} described by Jarvis \cite{square_root}. This method allows us to find the square root of an integer $n$.\\
+
+The algorithm \ref{alg:square_root} receives an integer $n$ and returns the first one hundred decimal digits of $\sqrt{n}$. The value of $p$ is set according of the number of decimal digits we want to calculate. 
+
+\begin{algorithm}[H]
+\caption{$squareRoot(n)$}
+\begin{algorithmic}
+    \STATE $a = 5n$
+    \STATE $b=5$
+    \STATE $p=10^{101}$
+    \WHILE{$b < p$}
+        \IF{$a \geq b$}
+            \STATE $a \gets a-b$
+            \STATE $b \gets b + 10$
+        \ELSE
+            \STATE $a \gets a \times 100$
+            \STATE $b \gets \lfloor b/10 \rfloor \times 100 + 5$
+        \ENDIF
+    \ENDWHILE
+    \STATE $b \gets \lfloor b/100 \rfloor$
+    \RETURN b
+\end{algorithmic}
+\label{alg:square_root}
+\end{algorithm}

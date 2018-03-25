@@ -1,0 +1,46 @@
+\addcontentsline{toc}{chapter}{429 - Sum of squares of unitary divisors}
+\chapter*{429 - Sum of squares of unitary divisors}
+
+A unitary divisor $d$ of a number $n$ is a divisor of $n$ that has the property $gcd(d, n/d) = 1$.
+The unitary divisors of $4! = 24$ are $1$, $3$, $8$ and $24$.
+The sum of their squares is $1^2 + 3^2 + 8^2 + 24^2 = 650.$ \\
+
+Let $S(n)$ represent the sum of the squares of the unitary divisors of $n$. Thus $S(4!)=650$. \\
+
+Find $S(100000000!)$ modulo $1000000009$.
+
+\section*{Solution}
+
+First of all we must avoid calculating $n!$ directly. A better approach is to represent $n!$ as the product of its prime factors. For example, for $4!$ we have
+
+$$
+4! = 2^3 \times 3^1.
+$$
+
+Since we only care about those divisors with $gcd(d,n/d) = 1$, we must represent the number as the product of factors with exponent $1$. For $4!$ we obtain
+
+$$
+4! = 8^1 \times 3^1.
+$$
+
+The result we are looking for is the sum of the products of all combinations of the square of those factors. For this specific case we have that
+
+$$
+S(4!) = 1 + 8^2 + 3^2 + 8^2 3^2 = 650
+$$
+
+To calculate that sum we can use the following trick. Suppose there $3$ factors, $f_1, f_2, f_3$. The sum of the products of all combinations of those factors is given by:
+
+$$
+(1 + f_1)(1 + f_2)(1 + f_3) = 1 + f_1 + f_2 + f_3 + f_1f_2 + f_1f_3 + f_2f_3 + f_1f_2f_3.
+$$
+
+For our problem, if we have $m$ factors the solution would be given by
+
+\begin{align*}
+    S(n!) &= \prod_{i=1}^m (1 + f_i^2)\\
+    &= \prod_{i=1}^m (1 + p_i^{2k_i}) 
+\end{align*}
+
+
+To obtain the value of $p_i^{2k^i}$ we can use binary exponentiation, in that case we will be dealing only with sums and products, and we can make use of the properties of modular arithmetic to keep the result modulo  $1000000009$.

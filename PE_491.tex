@@ -1,0 +1,22 @@
+\addcontentsline{toc}{chapter}{491 - Double pandigital number divisible by 11}
+\chapter*{491 - Double pandigital number divisible by 11}
+
+We call a positive integer double pandigital if it uses all the digits 0 to 9 exactly twice (with no leading zero). For example, 40561817703823564929 is one such number.\\
+
+How many double pandigital numbers are divisible by 11?
+
+\section*{Solution}
+
+We can use some tricks to solve this problem. First of all, to know if a number is divisible by 11 we can sum all its digits in even positions and subtract the result by the sum of all digits in odd positions, if the result is divisible by 11, then the original number is also divisible by 11.\\
+
+Knowing that we can generate only the digits in even positions using backtracking and keeping track of how many digits we have left. For that we can use an array $X$ of 10 elements, with initially $X_i = 2$, for each $i=0, \ldots, 9$, and every time we use the digit $k$ we decrease the value of $X_k$ by one.\\
+
+When we have placed the ten digits in even positions we only need to calculate if the number is divisible by 11 and obtain the number of combinations to place the remaining digits in odd positions, this will be given by
+
+$$
+    \binom {10}{X_1,X_2,\ldots,X_9} = \frac{n!}{X_1!X_2!\cdots X_9!}
+$$
+
+The result is then added to our answer. \\
+
+So far we will obtain a correct answer, but it can take a while to run.To improve the running time we can use memoization to store the results we are calculating in order to avoid to compute them again. To accomplish that we can represent the array $X$ as a base-3 number, and use a matrix $C$, so every time we are placing a digit in position $k$, we can store the result in $C_{kl}$, where $l$ is the base-10 representation of $X$.

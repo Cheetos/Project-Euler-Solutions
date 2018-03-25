@@ -1,0 +1,56 @@
+\addcontentsline{toc}{chapter}{95 - Amicable chains}
+\chapter*{95 - Amicable chains}
+
+The proper divisors of a number are all the divisors excluding the number itself. For example, the proper divisors of 28 are 1, 2, 4, 7, and 14. As the sum of these divisors is equal to 28, we call it a perfect number.\\
+
+Interestingly the sum of the proper divisors of 220 is 284 and the sum of the proper divisors of 284 is 220, forming a chain of two numbers. For this reason, 220 and 284 are called an amicable pair.\\
+
+Perhaps less well known are longer chains. For example, starting with 12496, we form a chain of five numbers:
+
+$$
+12496 \rightarrow 14288 \rightarrow 15472 \rightarrow  14536 \rightarrow  14264  (\rightarrow  12496 \rightarrow  ...)
+$$
+
+Since this chain returns to its starting point, it is called an amicable chain.\\
+
+Find the smallest member of the longest amicable chain with no element exceeding one million.
+
+\section*{Solution}
+
+For a number $n$ the sum of the divisors less or equal than $n$ is given by
+
+$$
+S(n) = \prod_{i=1}^m \frac{p_i^{k_i+1} - 1}{p_i - 1}
+$$
+
+where 
+
+$$
+n = \prod_{i=1}^m p_i^{k_i}
+$$
+
+To generate the primes up to $10^6$ quickly we can use the \textit{Sieve of Eratosthenes}.\\
+
+The idea is to mark the elements in a sequence and if we found a number that is already marked we will be able to obtain the length of the sequence and the starting/ending point of the cycle. We used an array $L$ and a counter to obtain the length of a cycle. For the example mentioned in the description we will have
+
+\begin{align*}
+    L_{12496} = 1 \\
+    L_{14288} = 2 \\
+    L_{15472} = 3 \\
+    L_{14536} = 4 \\
+    L_{14264} = 5
+\end{align*}
+
+The next value is $12496$ which is already marked, and the value of the counter is $6$, so the length of the sequence is $6 - L_{12496} = 5$. Also we can store in another array $X$ the starting/ending point of the cycle in each element of the chain, this is easily done using a recursive function.
+
+\begin{align*}
+    X_{12496} = 12496 \\
+    X_{14288} = 12496 \\
+    X_{15472} = 12496 \\
+    X_{14536} = 12496 \\
+    X_{14264} = 12496
+\end{align*}
+
+Sometimes we can start in a number that will led us to an already found cycle, just avoid counting the numbers found before entering the cycle.\\
+
+Finally we just need to look for the number $k$ which $k = X_k$, and have the greatest $L_k$. Start moving trough that cycle to find the smallest element.
