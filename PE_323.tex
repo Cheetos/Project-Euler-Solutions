@@ -1,0 +1,71 @@
+\addcontentsline{toc}{chapter}{323 - Bitwise-OR operations on random integers}
+\chapter*{323 - Bitwise-OR operations on random integers}
+
+\index{probability}
+Let $y_0, y_1, y_2, \ldots$ be a sequence of random unsigned 32 bit integers
+(i.e. $0 \leq y_i < 2^{32}$, every value equally likely).\\
+
+For the sequence $x_i$ the following recursion is given:
+
+\begin{align*}
+    x0 &= 0 \mbox{ and} \\
+    x_i &= x_{i-1}|y_{i-1}, \mbox{ for } i > 0. ( \hphantom{2} | \mbox{ is the bitwise-OR operator})
+\end{align*}
+
+It can be seen that eventually there will be an index $N$ such that $xi = 2^{32} -1$ (a bit-pattern of all ones) for all $i \geq N$.\\
+
+Find the expected value of N. 
+Give your answer rounded to 10 digits after the decimal point.
+
+\section*{Solution}
+
+We can see this as a game where the player wins when all 32 bits are 1. Define $s^{(t)}$ as the number of bits set to $1$ after t games, and lets call $P_i^{(t)}$ the probability of having $i$ 1's after $t$ games. Initially we have that $P_i^{(1)}$ follows a binomial distribution
+
+$$
+P_i^{(1)} = P(s^{(1)}=i) = \binom{32}{i} (0.5)^i (0.5)^{32-i}
+$$
+
+since all bits are equally likely, the probability for a bit of having a value of 0 is $0.5$.\\
+
+Is important to notice that there will be at least one attempt, so $P(N=1) = 1$.\\
+
+Let's assume we did not win in the first attempt. All the bits set to 1 in the first attempt will remain as 1 (because of the bitwise-OR), and there is a chance  that more bits are set to 1 in the second attempt, but the amount of 1's wont decrease.\\
+
+We need to calculate the conditional probability of getting $i$ ones, given that until the last attempt we had $j$ ones. We will call this probability $Q_{ij}$ $(i \geq j)$.\\
+
+To calculate the value of $Q_{ij}$ we know from the last attempt that $j$ from the 32 bits are 1, and the other $32-j$ bits are 0's. First we are going to place $i-j$ new bits to 1 (bits that were 0 after the last attempt). This follows a binomial distribution and we will call it $q_a$ and is given by
+
+$$
+q_a = \binom{32-j}{k} (0.5)^k (0.5)^{32-j-k},
+$$
+
+where $k = i-j$.\\
+
+We still need to deal with the bits that were 1 after the previous attempt. Well those bits don't matter if they are 0 or 1 in the next attempt, at the end they will remain with the value of 1. Be $q_b$ the probability of getting at most $j$ 1's in the next attempt in those bits. Its value is defined by
+
+$$
+q_b = \sum_{h=1}^j \binom{j}{h} (0.5)^h(0.5)^{j-h}.
+$$
+
+Then the value of $Q{ij}$ is defined as
+
+$$
+Q_{ij} = q_a q_b
+$$
+
+Once we know each value of $Q_{ij}$, the new value of $P^{(t+1)}_i$ is obtained by the formula of total probability:
+ 
+\begin{align*}
+P^{(t+1)}_i &= P(s^{(t+1)}=i)\\
+&= P(s^{(t+1)}=i|s^{(t)}=0)P(s^{(t)}=0) + \cdots + P(s^{(t+1)}=i|s^{(t)}=i)P(s^{(t)}=i)\\
+&= \sum_{j=0}^i P(s^{(t+1)}=i|s^{(t)}=j)P(s^{(t)}=j) \\
+&= \sum_{j=0}^i Q_{ij} P^{(t)}_j
+\end{align*}
+
+The probability of keep playing (probability of losing) is given by $1 - P_{32}$. As we continue playing that value will approach to zero. If we continuously add that value we will find the value of $E(N)$. Then
+
+\begin{align*}
+    E_1 &= 1 \\
+    E_i &= E_{i-1} + (1 - P_{32}^{(i)}) \mbox{ for } i \geq 2
+\end{align*}
+

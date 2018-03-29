@@ -1,0 +1,49 @@
+\addcontentsline{toc}{chapter}{104 - Pandigital Fibonacci ends}
+\chapter*{104 - Pandigital Fibonacci ends}
+
+\index{Fibonacci} \index{logarithms}
+
+The Fibonacci sequence is defined by the recurrence relation:\\
+
+$$
+F_n = F_{n-1} + F_{n-2}, \mbox{where} \hphantom{4} F_1 = 1 \mbox{ and } F_2 = 1.
+$$
+
+It turns out that $F_{541}$, which contains 113 digits, is the first Fibonacci number for which the last nine digits are 1-9 pandigital (contain all the digits 1 to 9, but not necessarily in order). And $F_{2749}$, which contains 575 digits, is the first Fibonacci number for which the first nine digits are 1-9 pandigital.\\
+
+Given that $F_k$ is the first Fibonacci number for which the first nine digits AND the last nine digits are 1-9 pandigital, find k.
+
+\section*{Solution}
+
+Obtaining the last 10 digits of a Fibonacci number is not a problem, in fact you can store the last 10 digits only and ignore the rest, but what about the first 10 digits? Well for this case we used the \textit{Binet's Formula} which states that
+
+$$
+F_n = \frac{\phi^n - (1 - \phi)^{n}}{\sqrt{5}}
+$$
+
+where $\phi$ is the golden ratio and is defined by
+
+$$
+\phi = \frac{1 + \sqrt{5}}{2} \approx 1.6180339887 \ldots
+$$
+
+Since the value of $(1 - \phi)^n$ is getting smaller as $n$ increases we can redefine the equation as
+
+$$
+F_n = \left [ \frac{\phi^n}{\sqrt{5}} \right ]
+$$
+
+What we did was to generate some Fibonacci numbers, after that only kept track of the first 10 and the last 10 digits. The first $k$ digits of a number $n$ can be obtained with the following formula:
+
+$$
+10^{\log{n} - k + 1}
+$$
+
+Then
+
+\begin{align*}
+    \log{F_n} &= \log{\frac{\phi^n}{\sqrt{5}}} \\ 
+    &= n \log{\phi} - 0.5\log{5}
+\end{align*}
+
+Finally, once we have the first 10 digits and the last 10 digits we only need to check if both are pandigital, which can be easily verified, and this way we avoid the use of big numbers and all the carry operations.
