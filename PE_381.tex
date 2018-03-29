@@ -1,0 +1,113 @@
+\addcontentsline{toc}{chapter}{381 - (prime-k) factorial}
+\chapter*{381 - (prime-k) factorial}
+
+\index{Extended Euclidean} \index{inverse multiplicative} \index{modular arithmetic} \index{Wilson's theorem}
+
+For a prime $p$ let $S(p) = \left ( \sum_{k=1}^5(p-k)! \right ) \bmod{p}$.\\
+
+For example, if $p=7$,
+
+\begin{align*}
+    \sum_{k=1}^5(p-k)! &= (7-1)! + (7-2)! + (7-3)! + (7-4)! + (7-5)!\\
+    &= 6! + 5! + 4! + 3! + 2!\\
+    &= 720+120+24+6+2\\
+    &= 872.
+\end{align*}
+
+
+As $872 \bmod{7}$ = 4, $S(7) = 4$.\\
+
+It can be verified that $\sum_{p=5}^{99} S(p) = 480$.\\
+
+Find $\sum_{p=5}^{10^8} S(p)$.
+
+\section*{Solution}
+
+By doing simple math and using modular arithmetic we get the $S(p)$ is defined by
+
+\begin{align*}
+    S(p) &= \left ( (p-5)! \bmod p \right ) \times 9 \\
+    &= \left ( \left ( \frac{(p-1)!}{(p-1)(p-2)(p-3)(p-4)} \right ) \bmod p \right ) \times 9
+\end{align*}
+
+According to Wilson's Theorem \cite{wilson_theorem},
+
+$$
+(n-1)! \bmod n = -1 \bmod p
+$$
+
+Then, we only need to get rid of the denominator by using modular arithmetic. More precisely by using the inverse multiplicative. Suppose we have the following operation
+
+$$
+\frac{a}{b} \bmod m
+$$
+
+we can rewrite it as
+
+$$
+\left ( a \bmod m \right ) \left ( \frac{1}{b} \bmod m \right )
+$$
+
+The inverse multiplicative of $b$ is a number $k$, such that $(bk) \bmod n = 1$. Getting back to our problem, we are looking for an integer $k$ such that
+
+$$
+k(p-1)(p-2)(p-3)(p-4) \bmod p = 1
+$$
+
+Using modular arithmetic we have that
+
+\begin{align*}
+    (k(-1)(-2)(-3)(-4)) \bmod p &= 1 \\
+    24k \bmod p &= 1
+\end{align*}
+
+Then 
+
+\begin{align*}
+    S(p) &= \left ( \frac{(p-1)!}{24} \bmod{p} \right ) \times 9 \\
+    &= \left ( (p-1)! \frac{3}{8} \right ) \bmod p \\
+    &= (-1 \bmod p) (3k \bmod p) \\
+    &= (-3 \bmod p) (k \bmod p)\\
+    &= (p-3)(k \bmod p)
+\end{align*}
+
+where $8k \bmod p = 1$\\
+
+The value of $k$ can be found using the \textit{Extended Euclidean Algorithm}, which finds the inverse multiplicative of a number $a \bmod n$, only when $a$ and $n$ are coprimes. Since for our problem $n$ is prime, we can use it.\\
+
+The \textit{Extended Euclidean Algorithm} find the values of $x$ and $y$ that solve the following equation:
+
+$$
+ax + by = 1
+$$
+
+Using $a=8$ and $b=p$ we have
+
+$$
+8x + py = 1
+$$
+
+Obtaining the modulus in both sides of the equation we get
+
+\begin{align*}
+    (8x + py) \bmod p &= 1 \\
+    8x \bmod p &= 1
+\end{align*}
+
+which is what we are looking for. So basically we must calculate the value of $x$ using the \textit{Extended Euclidean Algorithm} and add the value of $p$ to avoid negative values. Then
+
+$$
+(x,y) = \mbox{ExtendenEuclidean}(8,p)
+$$
+
+and
+
+$$
+k = \left (x + p \right ) \bmod p
+$$
+
+Finally the value of $S(p)$ is given by
+
+$$
+S(p) = \left ( (p-3) \times k \right ) \bmod p
+$$

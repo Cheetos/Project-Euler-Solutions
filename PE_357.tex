@@ -1,0 +1,31 @@
+\addcontentsline{toc}{chapter}{357 - Prime generating integers}
+\chapter*{357 - Prime generating integers}
+
+\index{prime numbers}
+Consider the divisors of $30: 1,2,3,5,6,10,15,30$.
+It can be seen that for every divisor $d$ of $30$, $d+30/d$ is prime\\.
+
+Find the sum of all positive integers $n$ not exceeding $100000000$
+such that for every divisor $d$ of $n$, $d+n/d$ is prime.
+
+\section*{Solution}
+
+The sequences for the first ten numbers are the following:
+
+\begin{align*}
+    2 &: 3,3\\
+    3 &: 4,4\\
+    4 &: 5,4,5\\
+    5 &: 6,6\\
+    6 &: 7,5,5,7\\
+    7 &: 8,8\\
+    8 &: 9,6,6,9\\
+    9 &: 10,6,10\\
+    10 &: 11,7,7,11
+\end{align*}
+
+Is easy to notice that the first element in the sequence is $n+1$, then $n+1$ must be prime. Then the integers we are looking are even, since $n+1$ must be prime, and all prime numbers except $2$ are odd.\\
+
+So far we know that we are looking for even numbers, and since all even numbers have $2$ as a divisor, then $n/2+2$ must be prime as well. Then we are looking even numbers such as, $n+1$ is prime and $n/2 + 2$ is prime.\\
+
+I found out (by try and error) that these integers, except $2$ and $6$ ,are of the form of $10 + 20a, 18+20b$, and $22+20c$, for $a,b,c \geq 0$.  Now, not every number is valid, so we must check if all divisors $d$ of those numbers meet that $d + n/d$ is prime. From sequences above we can notice the sequences are mirrored from half, then we only need to search for divisors up to $\sqrt{n}$, which will run a lot faster.   

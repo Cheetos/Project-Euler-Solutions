@@ -1,0 +1,36 @@
+\addcontentsline{toc}{chapter}{206 - Concealed Square}
+\chapter*{206 - Concealed Square}
+
+\index{brute force}
+Find the unique positive integer whose square has the form $1\_2\_3\_4\_5\_6\_7\_8\_9\_0$,
+where each '''\_' is a single digit.
+
+\section*{Solution}
+
+I'm not very happy with my solution here, but here it is. The first thing to notice is that we are looking for 9 digits between $[0,9]$, making $10^9$ possible combinations. Now, the number we are looking must have 10 digits and has the form:
+
+$$
+d_0d_1d_2d_3d_4d_5d_6d_7d_8d_9.
+$$
+
+We know that $d_9^2$ must ends with $0$. So the only choice is that
+
+$$
+d_9 = 0
+$$
+
+Also we know that 
+
+$$
+d_8^2 + d_7d_9 = 9
+$$
+
+Replacing $d_9$ with 0 we obtain
+
+$$
+d_8^2 = 9
+$$
+
+We have two solutions here, $d_8$ can be 3, or 7. What I did was to try both numbers, and give $d_7$ different values.\\
+
+With the values of $d_7,d_8$, and $d_9$, we can find the the other seven digits by brute force in a reasonable amount of time. 
