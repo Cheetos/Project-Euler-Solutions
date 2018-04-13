@@ -1,0 +1,36 @@
+\addcontentsline{toc}{chapter}{94 - Almost equilateral triangles}
+\chapter*{94 - Almost equilateral triangles}
+
+\index{triangle area}
+It is easily proved that no equilateral triangle exists with integral length sides and integral area. However, the almost equilateral triangle 5-5-6 has an area of 12 square units.\\
+
+We shall define an almost equilateral triangle to be a triangle for which two sides are equal and the third differs by no more than one unit.\\
+
+Find the sum of the perimeters of all almost equilateral triangles with integral side lengths and area and whose perimeters do not exceed one billion ($10000000000$).\\
+
+\section*{Solution}
+
+Two sides of the triangle are equal and the other differs by no more than one unit. One option is having lengths: $k,k,k+1$. Using the Heron's formula to obtain the triangle's area we have:
+
+\begin{align*}
+    s &= \frac{k + k + k+1}{2} \\
+    &= \frac{3k+1}{2}
+\end{align*}
+
+and the triangle's area is given by
+
+\begin{align*}
+    A_1 &= \sqrt{s(s-k)(s-k)(s-k-1)}\\
+    &= \sqrt{\left ( \frac{3k+1}{2} \right ) \left ( \frac{k+1}{2} \right ) \left ( \frac{k+1}{2} \right ) \left ( \frac{k-1}{2} \right )}\\
+    &= \frac{(k+1) \sqrt{3k^2 - 2k - 1}}{4}
+\end{align*}
+
+For lengths $k,k,k-1$ and following the same process we obtain that the area is 
+
+$$
+A_2 = \frac{(k-1) \sqrt{3k^2 + 2k - 1}}{4}
+$$
+
+Basically we are looking for values of $k$ such as $3k^2 \pm 2k - 1$ is a square number, and that $(k \mp 1)(3k^2 \pm 2k - 1)$ is divisible by 4.\\
+
+After generating the fist values of $k$ I noticed that they are of the form $4i+1$, for some positive integers values of $i$. The upper bound for $k$ is $k \leq M$, where $M = (10^9-1)/3$. So i started iterating trough all values of the form $4i+1$, for $i=1, \ldots, M/4-1$ and checked if $3k^2 \pm 2k - 1$ was a square number, and if it was I added $3k \mp 1$ (the perimeter) to the result. The program ran in about $1.4$ seconds in \texttt{C++}.
