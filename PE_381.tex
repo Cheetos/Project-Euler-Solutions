@@ -33,8 +33,10 @@ By doing simple math and using modular arithmetic we get the $S(p)$ is defined b
 According to Wilson's Theorem \cite{wilson_theorem},
 
 $$
-(n-1)! \bmod n = -1 \bmod p
+(n-1)! \bmod n = -1 \bmod n
 $$
+
+When $n$ is prime.\\
 
 Then, we only need to get rid of the denominator by using modular arithmetic. More precisely by using the inverse multiplicative. Suppose we have the following operation
 
@@ -48,7 +50,7 @@ $$
 \left ( a \bmod m \right ) \left ( \frac{1}{b} \bmod m \right )
 $$
 
-The inverse multiplicative of $b$ is a number $k$, such that $(bk) \bmod n = 1$. Getting back to our problem, we are looking for an integer $k$ such that
+The inverse multiplicative of $b$ is a number $k$, such that $(bk) \bmod m = 1$. Getting back to our problem, we are looking for an integer $k$ such that
 
 $$
 k(p-1)(p-2)(p-3)(p-4) \bmod p = 1
@@ -73,7 +75,7 @@ Then
 
 where $8k \bmod p = 1$\\
 
-The value of $k$ can be found using the \textit{Extended Euclidean Algorithm}, which finds the inverse multiplicative of a number $a \bmod n$, only when $a$ and $n$ are coprimes. Since for our problem $n$ is prime, we can use it.\\
+The value of $k$ can be found using the \textit{Extended Euclidean Algorithm}, which finds the inverse multiplicative of a number $a \bmod n$, only when $a$ and $m$ are coprimes. Since for our problem $m$ is prime, we can use it.\\
 
 The \textit{Extended Euclidean Algorithm} find the values of $x$ and $y$ that solve the following equation:
 
@@ -97,7 +99,7 @@ Obtaining the modulus in both sides of the equation we get
 which is what we are looking for. So basically we must calculate the value of $x$ using the \textit{Extended Euclidean Algorithm} and add the value of $p$ to avoid negative values. Then
 
 $$
-(x,y) = \mbox{ExtendenEuclidean}(8,p)
+(x,y) = \mbox{ExtendedEuclidean}(8,p)
 $$
 
 and
