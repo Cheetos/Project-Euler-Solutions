@@ -1,0 +1,21 @@
+\addcontentsline{toc}{chapter}{98 - Anagramic squares}
+\chapter*{98 - Anagramic squares}
+
+\index{hash-map} \index{anagrams}
+By replacing each of the letters in the word CARE with 1, 2, 9, and 6 respectively, we form a square number: $1296 = 36^2$. What is remarkable is that, by using the same digital substitutions, the anagram, RACE, also forms a square number: $9216 = 96^2$. We shall call CARE (and RACE) a square anagram word pair and specify further that leading zeroes are not permitted, neither may a different letter have the same digital value as another letter.\\
+
+Using \texttt{words.txt} (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand common English words, find all the square anagram word pairs (a palindromic word is NOT considered to be an anagram of itself).\\
+
+What is the largest square number formed by any member of such a pair?\\
+
+NOTE: All anagrams formed must be contained in the given text file.\\
+
+\section*{Solution}
+
+The longest word in the file has 14 letters, but looking for the anagram pairs I found out that the longest word with an anagram pair has 10 letters. So we only need to iterate through numbers less than $10^5$ and store their squares (only the ones that has anagrams). For that I used a matrix, and in row 1 I stored the 1-digit squares, in row 2 the 2-digit squares, and so on.\\
+
+To find words that are anagram pairs I used a map with the sorted word as key, because if we sort two anagrams we get the same string, and they will have the same key. The same approach is done to find the anagram squares, sort the digits and convert the resulting number into a string, with the leading zeros included, and use that string as key of a map, that help us to identify anagram squares.\\
+
+I stored all the anagram pairs in a vector of pairs. For each pair $<A,B>$ I obtained the length of the words and started searching in the matrix in the corresponding row. For each number I checked  if that number and word $A$ were a valid match, for that I used two arrays, in one I was marking the digits that were already being used, and in the other array I stored the digit assigned to each letter. Doing that I could check that two letters didn't have the same digit assigned and also that one letter didn't have two different digits assigned.\\
+
+Once we know the numeric value of each letter we build a new number using word $B$ of the pair, and search for that number in the same row of the matrix, if the numbers are sorted we can use a binary search. If the number is found, then that pair is an \textit{anagram word pair}. We repeat the process for each pair of words and report the largest square found. This approach run in $0.4$ seconds approximately. 
